@@ -50,8 +50,8 @@ bash scripts/seed/run_all.sh
 Then start or restart the UIs:
 
 ```bash
-docker compose build web-admin web-ops
-docker compose up -d web-admin web-ops
+docker-compose build web-admin web-ops
+docker-compose up -d web-admin web-ops
 ```
 
 ---
@@ -87,7 +87,7 @@ Expected:
 - no 500s
 
 If any fail:
-- check `docker compose logs <service>`
+- check `docker-compose logs <service>`
 - fix that service before continuing
 
 ---

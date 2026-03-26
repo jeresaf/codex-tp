@@ -364,7 +364,7 @@ jobs:
 
       - name: Start stack
         run: |
-          docker compose up --build -d
+          docker-compose up --build -d
           bash scripts/migrate/run_all.sh
           bash scripts/seed/run_all.sh
 

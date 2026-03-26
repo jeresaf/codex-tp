@@ -1077,4 +1077,4 @@ CMD ["npm", "run", "dev"]
 EOF
 
 echo "Vue admin + ops UI bootstrap applied."
-echo "Next: docker compose build web-admin web-ops && docker compose up -d web-admin web-ops"
+echo "Next: docker-compose build web-admin web-ops && docker-compose up -d web-admin web-ops"

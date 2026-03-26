@@ -6945,19 +6945,19 @@ services:
 
 ```Makefile
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
-	docker compose exec identity-service bash /workspace/scripts/migrate.sh
+	docker-compose exec identity-service bash /workspace/scripts/migrate.sh
 
 seed:
-	docker compose exec identity-service bash /workspace/scripts/seed.sh
+	docker-compose exec identity-service bash /workspace/scripts/seed.sh
 
 smoke:
 	bash ./scripts/smoke.sh
@@ -8032,8 +8032,8 @@ curl -s http://localhost:8008/health >/dev/null
 curl -s http://localhost:8009/health >/dev/null
 
 echo "Fetching seeded venue and instrument..."
-INSTRUMENT_ID=$(docker compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(docker compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(docker-compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(docker-compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 
 echo "Submitting integrated order..."
 RESPONSE=$(curl -s -X POST http://localhost:8005/api/orders/submit \
@@ -8322,8 +8322,8 @@ Open ops UI:
 Get seeded IDs from DB:
 
 ```Bash
-docker compose exec postgres psql -U postgres -d trading_platform -c "SELECT id, canonical_symbol FROM instruments;"
-docker compose exec postgres psql -U postgres -d trading_platform -c "SELECT id, code FROM venues;"
+docker-compose exec postgres psql -U postgres -d trading_platform -c "SELECT id, canonical_symbol FROM instruments;"
+docker-compose exec postgres psql -U postgres -d trading_platform -c "SELECT id, code FROM venues;"
 ```
 
 ## Step 8
@@ -15962,13 +15962,13 @@ EOF
 
 cat > Makefile <<'EOF'
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh
@@ -18490,13 +18490,13 @@ Use these commands:
 
 ```makefile
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh
@@ -18917,13 +18917,13 @@ services:
 
 ```makefile
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh
@@ -18953,7 +18953,7 @@ for f in sql/001_core_identity.sql \
 
 do
   echo "Applying $f"
-  PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
+  PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
 done
 ```
 
@@ -18982,8 +18982,8 @@ curl -s http://localhost:8007/health/live >/dev/null
 curl -s http://localhost:8008/health/live >/dev/null
 curl -s http://localhost:8009/health/live >/dev/null
 
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 
 RESPONSE=$(curl -s -X POST http://localhost:8005/api/orders/submit \
   -H "Content-Type: application/json" \
@@ -19981,13 +19981,13 @@ EOF
 
 cat > Makefile <<'EOF'
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh
@@ -20367,7 +20367,7 @@ cat > scripts/migrate/run_all.sh <<'EOF'
 set -euo pipefail
 for f in sql/001_core_identity.sql sql/002_markets_instruments.sql sql/003_strategies.sql sql/004_orders_risk.sql sql/005_positions_audit.sql; do
   echo "Applying $f"
-  PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
+  PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
 done
 EOF
 chmod +x scripts/migrate/run_all.sh
@@ -20391,8 +20391,8 @@ curl -s http://localhost:8006/health/live >/dev/null
 curl -s http://localhost:8007/health/live >/dev/null
 curl -s http://localhost:8008/health/live >/dev/null
 curl -s http://localhost:8009/health/live >/dev/null
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 curl -s -X POST http://localhost:8005/api/orders/submit -H "Content-Type: application/json" -d "{\"instrument_id\":\"$INSTRUMENT_ID\",\"side\":\"buy\",\"order_type\":\"market\",\"quantity\":\"1000\",\"tif\":\"IOC\",\"venue_id\":\"$VENUE_ID\",\"execution_price\":\"1.0850\"}"
 echo
 curl -s http://localhost:8008/api/positions
@@ -22941,8 +22941,8 @@ cat > scripts/smoke/event_pipeline_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN=$(curl -s -X POST http://localhost:8001/api/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"admin123"}' | python -c 'import sys,json; print(json.load(sys.stdin)["access_token"])')
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 curl -s -X POST http://localhost:8005/api/orders/submit \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
@@ -23765,7 +23765,7 @@ cat > scripts/smoke/runtime_portfolio_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN=$(curl -s -X POST http://localhost:8001/api/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"admin123"}' | python -c 'import sys,json; print(json.load(sys.stdin)["access_token"])')
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 CORR_ID=$(python - <<'PY'
 import uuid
 print(uuid.uuid4())
@@ -24535,7 +24535,7 @@ PY
 cat > scripts/smoke/data_feature_replay_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 NOW=$(python - <<'PY'
 from datetime import datetime, timedelta, timezone
 now = datetime.now(timezone.utc)
@@ -29498,7 +29498,7 @@ CMD ["npm", "run", "dev"]
 EOF
 
 echo "Vue admin + ops UI bootstrap applied."
-echo "Next: docker compose build web-admin web-ops && docker compose up -d web-admin web-ops"
+echo "Next: docker-compose build web-admin web-ops && docker-compose up -d web-admin web-ops"
 
 ```
 
@@ -29518,8 +29518,8 @@ It writes the actual Vue UI files for:
 You can apply it in the repo, then build and run the UIs:
 
 ```Bash
-docker compose build web-admin web-ops
-docker compose up -d web-admin web-ops
+docker-compose build web-admin web-ops
+docker-compose up -d web-admin web-ops
 ```
 
 The strongest next step is to generate a **full end-to-end manual QA walkthrough** covering every currently working backend and UI module in exact testing order.
@@ -29585,8 +29585,8 @@ bash scripts/seed/run_all.sh
 Then start or restart the UIs:
 
 ```bash
-docker compose build web-admin web-ops
-docker compose up -d web-admin web-ops
+docker-compose build web-admin web-ops
+docker-compose up -d web-admin web-ops
 ```
 
 ---
@@ -29622,7 +29622,7 @@ Expected:
 - no 500s
 
 If any fail:
-- check `docker compose logs <service>`
+- check `docker-compose logs <service>`
 - fix that service before continuing
 
 ---
@@ -30375,7 +30375,7 @@ Fill one row per test case.
 | ID | Module | Area/Page/API | Test Case | Steps | Expected Result | Actual Result | Status | Defect ID | Severity | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
 | INF-001 | Infrastructure | Health endpoints | Verify all health endpoints return OK | Open or curl all `/health/live` endpoints | All services return healthy JSON |  |  |  |  |  |
-| INF-002 | Infrastructure | Docker services | Verify all required containers are running | Run `docker compose ps` | All expected services are up |  |  |  |  |  |
+| INF-002 | Infrastructure | Docker services | Verify all required containers are running | Run `docker-compose ps` | All expected services are up |  |  |  |  |  |
 | DB-001 | Seed | Users | Verify admin user exists | Query DB for `admin@example.com` | Admin row exists |  |  |  |  |  |
 | DB-002 | Seed | Markets | Verify seeded markets | Query or call markets API | Forex and Crypto exist |  |  |  |  |  |
 | DB-003 | Seed | Venues | Verify seeded venues | Query or call related API/DB | OANDA Demo and Binance Testnet exist |  |  |  |  |  |
@@ -30964,7 +30964,7 @@ jobs:
 
       - name: Start stack
         run: |
-          docker compose up --build -d
+          docker-compose up --build -d
           bash scripts/migrate/run_all.sh
           bash scripts/seed/run_all.sh
 
@@ -31434,7 +31434,7 @@ jobs:
 
       - name: Start stack
         run: |
-          docker compose up --build -d
+          docker-compose up --build -d
           bash scripts/migrate/run_all.sh
           bash scripts/seed/run_all.sh
 
@@ -31858,7 +31858,7 @@ jobs:
 
       - name: Start stack
         run: |
-          docker compose up --build -d
+          docker-compose up --build -d
           bash scripts/migrate/run_all.sh
           bash scripts/seed/run_all.sh
 
@@ -31902,8 +31902,8 @@ It adds:
 After applying it, rebuild the affected services and run the suite:
 
 ```Bash
-docker compose build market-registry-service web-ops
-docker compose up -d market-registry-service web-ops
+docker-compose build market-registry-service web-ops
+docker-compose up -d market-registry-service web-ops
 cd tests
 npm install
 npx playwright install --with-deps
@@ -31943,8 +31943,8 @@ bash scripts/smoke/platform_smoke.sh
 Then bring up the UIs:
 
 ```Bash
-docker compose build web-admin web-ops
-docker compose up -d web-admin web-ops
+docker-compose build web-admin web-ops
+docker-compose up -d web-admin web-ops
 ```
 
 # 3. Execute the manual QA checklist

@@ -48,7 +48,7 @@ Fill one row per test case.
 | ID | Module | Area/Page/API | Test Case | Steps | Expected Result | Actual Result | Status | Defect ID | Severity | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
 | INF-001 | Infrastructure | Health endpoints | Verify all health endpoints return OK | Open or curl all `/health/live` endpoints | All services return healthy JSON |  |  |  |  |  |
-| INF-002 | Infrastructure | Docker services | Verify all required containers are running | Run `docker compose ps` | All expected services are up |  |  |  |  |  |
+| INF-002 | Infrastructure | Docker services | Verify all required containers are running | Run `docker-compose ps` | All expected services are up |  |  |  |  |  |
 | DB-001 | Seed | Users | Verify admin user exists | Query DB for `admin@example.com` | Admin row exists |  |  |  |  |  |
 | DB-002 | Seed | Markets | Verify seeded markets | Query or call markets API | Forex and Crypto exist |  |  |  |  |  |
 | DB-003 | Seed | Venues | Verify seeded venues | Query or call related API/DB | OANDA Demo and Binance Testnet exist |  |  |  |  |  |

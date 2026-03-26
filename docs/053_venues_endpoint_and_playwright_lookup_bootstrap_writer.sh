@@ -192,5 +192,5 @@ if p.exists():
 PY
 
 echo "Venues endpoint and Playwright lookup applied."
-echo "Next: docker compose build market-registry-service web-ops && docker compose up -d market-registry-service web-ops"
+echo "Next: docker-compose build market-registry-service web-ops && docker-compose up -d market-registry-service web-ops"
 echo "Then run: cd tests && npm install && npx playwright install --with-deps && npm test"

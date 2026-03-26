@@ -65,13 +65,13 @@ EOF
 
 cat > Makefile <<'EOF'
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh

@@ -136,13 +136,13 @@ services:
 
 ```makefile
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
 	bash scripts/migrate/run_all.sh
@@ -172,7 +172,7 @@ for f in sql/001_core_identity.sql \
 
 do
   echo "Applying $f"
-  PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
+  PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
 done
 ```
 
@@ -201,8 +201,8 @@ curl -s http://localhost:8007/health/live >/dev/null
 curl -s http://localhost:8008/health/live >/dev/null
 curl -s http://localhost:8009/health/live >/dev/null
 
-INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker-compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 
 RESPONSE=$(curl -s -X POST http://localhost:8005/api/orders/submit \
   -H "Content-Type: application/json" \

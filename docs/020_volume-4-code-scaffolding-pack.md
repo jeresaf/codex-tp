@@ -1419,19 +1419,19 @@ services:
 
 ```Makefile
 up:
-	docker compose up --build -d
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 logs:
-	docker compose logs -f
+	docker-compose logs -f
 
 migrate:
-	docker compose exec identity-service bash /workspace/scripts/migrate.sh
+	docker-compose exec identity-service bash /workspace/scripts/migrate.sh
 
 seed:
-	docker compose exec identity-service bash /workspace/scripts/seed.sh
+	docker-compose exec identity-service bash /workspace/scripts/seed.sh
 
 smoke:
 	bash ./scripts/smoke.sh
