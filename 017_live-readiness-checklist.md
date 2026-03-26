@@ -1,0 +1,13 @@
+Before any live capital:
+- market data stable under load
+- all order paths audited
+- risk policies approved
+- reconciliation working daily
+- kill switches tested
+- broker adapter tested for rejects/cancels/partials
+- paper trading stable for meaningful duration
+- dashboards accurate
+- incident alerts working
+- rollback path documented
+- strategy version approved
+- deployment approval recorded

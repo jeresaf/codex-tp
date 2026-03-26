@@ -1,0 +1,11 @@
+Never do these:
+- let strategies talk directly to brokers
+- mix backtest and live assumptions in same uncontrolled path
+- hardcode broker symbols into strategy logic
+- let live deployment happen without approvals
+- skip reconciliation
+- ignore stale data detection
+- treat paper trading as optional
+- store secrets in repo or plain config
+- allow silent order retries without bounds
+- allow manual position changes without audit entries
