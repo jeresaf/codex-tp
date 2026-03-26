@@ -226,7 +226,9 @@ create_python_service() {
   local svc="$1"
   mkdir -p "apps/$svc/app/api/routes" "apps/$svc/app/config" "apps/$svc/app/db/models" \
            "apps/$svc/app/domain/services" "apps/$svc/app/use_cases" \
-           "apps/$svc/app/integrations" "apps/$svc/app/events/{consumers,producers,outbox,inbox}" \
+           "apps/$svc/app/integrations" \
+           "apps/$svc/app/events/consumers" "apps/$svc/app/events/producers" \
+           "apps/$svc/app/events/outbox" "apps/$svc/app/events/inbox" \
            "apps/$svc/app/observability" "apps/$svc/tests"
 
   cat > "apps/$svc/app/main.py" <<EOF
@@ -303,7 +305,10 @@ EOF
 
 create_vue_app() {
   local app="$1"
-  mkdir -p "apps/$app/src" "apps/$app/src/{api,app,components,layouts,router,stores,views}"
+  mkdir -p "apps/$app/src" \
+           "apps/$app/src/api" "apps/$app/src/app" "apps/$app/src/components" \
+           "apps/$app/src/layouts" "apps/$app/src/router" "apps/$app/src/stores" \
+           "apps/$app/src/views"
   cat > "apps/$app/package.json" <<EOF
 {
   "name": "$app",

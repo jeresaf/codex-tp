@@ -1,0 +1,8 @@
+from fastapi import FastAPI
+from app.api.routes.audit import router as audit_router
+app = FastAPI(title="audit-service", version="0.1.0")
+app.include_router(audit_router, prefix="/api/audit", tags=["audit"])
+@app.get("/health/live")
+def health_live(): return {"status": "ok", "service": "audit-service"}
+@app.get("/health/ready")
+def health_ready(): return {"status": "ready", "service": "audit-service"}
