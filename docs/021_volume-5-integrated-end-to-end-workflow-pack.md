@@ -627,8 +627,8 @@ curl -s http://localhost:8008/health >/dev/null
 curl -s http://localhost:8009/health >/dev/null
 
 echo "Fetching seeded venue and instrument..."
-INSTRUMENT_ID=$(docker-compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(docker-compose exec -T postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(docker-compose exec postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(docker-compose exec postgres psql -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 
 echo "Submitting integrated order..."
 RESPONSE=$(curl -s -X POST http://localhost:8005/api/orders/submit \
