@@ -774,7 +774,7 @@ cat > scripts/smoke/runtime_portfolio_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN=$(curl -s -X POST http://localhost:8001/api/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"admin123"}' | python -c 'import sys,json; print(json.load(sys.stdin)["access_token"])')
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 CORR_ID=$(python - <<'PY'
 import uuid
 print(uuid.uuid4())

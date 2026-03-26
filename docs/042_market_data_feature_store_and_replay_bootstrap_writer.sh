@@ -713,7 +713,7 @@ PY
 cat > scripts/smoke/data_feature_replay_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 NOW=$(python - <<'PY'
 from datetime import datetime, timedelta, timezone
 now = datetime.now(timezone.utc)

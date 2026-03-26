@@ -18953,7 +18953,7 @@ for f in sql/001_core_identity.sql \
 
 do
   echo "Applying $f"
-  PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -f "$f"
+  PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
 done
 ```
 
@@ -18982,8 +18982,8 @@ curl -s http://localhost:8007/health/live >/dev/null
 curl -s http://localhost:8008/health/live >/dev/null
 curl -s http://localhost:8009/health/live >/dev/null
 
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 
 RESPONSE=$(curl -s -X POST http://localhost:8005/api/orders/submit \
   -H "Content-Type: application/json" \
@@ -20367,7 +20367,7 @@ cat > scripts/migrate/run_all.sh <<'EOF'
 set -euo pipefail
 for f in sql/001_core_identity.sql sql/002_markets_instruments.sql sql/003_strategies.sql sql/004_orders_risk.sql sql/005_positions_audit.sql; do
   echo "Applying $f"
-  PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -f "$f"
+  PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -f "$f"
 done
 EOF
 chmod +x scripts/migrate/run_all.sh
@@ -20391,8 +20391,8 @@ curl -s http://localhost:8006/health/live >/dev/null
 curl -s http://localhost:8007/health/live >/dev/null
 curl -s http://localhost:8008/health/live >/dev/null
 curl -s http://localhost:8009/health/live >/dev/null
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 curl -s -X POST http://localhost:8005/api/orders/submit -H "Content-Type: application/json" -d "{\"instrument_id\":\"$INSTRUMENT_ID\",\"side\":\"buy\",\"order_type\":\"market\",\"quantity\":\"1000\",\"tif\":\"IOC\",\"venue_id\":\"$VENUE_ID\",\"execution_price\":\"1.0850\"}"
 echo
 curl -s http://localhost:8008/api/positions
@@ -22941,8 +22941,8 @@ cat > scripts/smoke/event_pipeline_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN=$(curl -s -X POST http://localhost:8001/api/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"admin123"}' | python -c 'import sys,json; print(json.load(sys.stdin)["access_token"])')
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
-VENUE_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+VENUE_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM venues WHERE code='oanda-demo' LIMIT 1;")
 curl -s -X POST http://localhost:8005/api/orders/submit \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
@@ -23765,7 +23765,7 @@ cat > scripts/smoke/runtime_portfolio_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN=$(curl -s -X POST http://localhost:8001/api/auth/login -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"admin123"}' | python -c 'import sys,json; print(json.load(sys.stdin)["access_token"])')
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 CORR_ID=$(python - <<'PY'
 import uuid
 print(uuid.uuid4())
@@ -24535,7 +24535,7 @@ PY
 cat > scripts/smoke/data_feature_replay_smoke.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-INSTRUMENT_ID=$(PGPASSWORD=postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
+INSTRUMENT_ID=$(PGPASSWORD=docker compose exec -T postgres psql -h localhost -U postgres -d trading_platform -t -A -c "SELECT id FROM instruments WHERE canonical_symbol='EURUSD' LIMIT 1;")
 NOW=$(python - <<'PY'
 from datetime import datetime, timedelta, timezone
 now = datetime.now(timezone.utc)
